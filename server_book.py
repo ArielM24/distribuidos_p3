@@ -18,7 +18,7 @@ def synchronize_time():
 		try:
 			sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			server_address = ('192.168.100.38', 8000)
-			#print('connecting to {} port {}'.format(*server_address))
+			print('connecting to {} port {}'.format(*server_address))
 			sock.connect(server_address)
 			ct = datetime.datetime.now()
 			t0 = timer()
@@ -28,11 +28,11 @@ def synchronize_time():
 			t1 = timer()
 			latency = t1 - t0
 			nt = st + datetime.timedelta(seconds = (latency / 2))
-			#print("data", data)
-			#print("last time", ct)
-			#print("latency", latency)
-			#print("server time", st)
-			#print("new time", nt)
+			print("data", data)
+			print("last time", ct)
+			print("latency", latency)
+			print("server time", st)
+			print("new time", nt)
 			global clock_time
 			clock_time[0] = nt.hour
 			clock_time[1] = nt.minute
@@ -75,7 +75,9 @@ def listening(n = 5):
 				response = connection.recv(1024).decode()
 				print("RESPONSE", response)
 				book_list = list(range(n))
-				if response != "reset": #reinicio de sesion
+				if response == "exit": #reinicio de sesion
+					continue
+				elif response != "reset":
 					sessions = sessions + 1
 				else:
 					continue
