@@ -53,9 +53,14 @@ class Clock():
 class BookClock(Clock):
 	def __init__(self, title, current_time):
 		Clock.__init__(self, title, current_time)
-		self.root.geometry("350x500")
-		self.canvas = Label(self.root, text = "a")
-		self.canvas.grid(row = 4, column = 0)
-		img = ImageTk.PhotoImage(Image.open("faro.jpg"))
-		self.canvas.image = img
+		self.root.geometry("350x520")
+
+	def change_image(self, n):
+		load = Image.open("{}.jpg".format(n))
+		load = load.resize((200,280), Image.ANTIALIAS)
+		render = ImageTk.PhotoImage(load)
+		img = Label(self.root, image=render)
+		img.image = render
+		img.grid(row = 4, column = 0)
+		self.img = img
 
